@@ -4,4 +4,4 @@
 - Get all flights
 - Get a single flight
 - Update/Edit flights
-- Delete flights
+- Cancel flights
