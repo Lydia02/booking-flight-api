@@ -1,0 +1,41 @@
+
+###
+GET http://localhost:3000/flight HTTP/1.1
+
+###
+GET http://localhost:3000/flight HTTP/1.1
+
+###
+POST http://localhost:3000/flight HTTP/1.1
+Content-Type: application/json
+
+{
+    "flight": "wow Airline",
+    "price": "$400",
+    "seat_Number":  "7b",
+    "source":"ABCW",
+    //"code": '11',
+    "departureTime": "12:00 PM",
+    "ArrivalTime": "2:00 PM",
+    "Destination": "Port-Harcourt"
+    
+}
+
+###
+PUT http://localhost:3000/flight/631974c062ed975584fba099 HTTP/1.1
+Content-Type: application/json
+
+{
+    "flight": "MAX Airline",
+    "price": "$400",
+    "seat_Number":  "3b",
+    "source":"ArBC",
+    //"code": '11',
+    "departureTime": "2:00 PM",
+    "ArrivalTime": "5:00 PM",
+    "Destination": "lagos"
+}
+###
+DELETE http://localhost:3000/flight/631974c062ed975584fba099 HTTP/1.1
+
+

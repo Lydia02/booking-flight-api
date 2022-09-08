@@ -1,44 +1,45 @@
 const {json} = require("express");
-const Task = require("../model/Task")
+const Flight = require("../model/Flight")
 
 //get all tasks
-exports.getAllTasks = async (req, res)=> {
+exports.getAllFlights = async (req, res)=> {
     try {
-        let tasks = await Task.find();
-        if(tasks.length === 0)
+        let flights = await Flight.find();
+        if(flights.length === 0)
         return res.status(404).json({
             success: false,
-            message: 'No Task were found'
+            message: 'No flights booked!'
+            
             })
 
         res.status(200).json({
             success:true,
-            message: "Tasks found",
-            tasks,
-            count: tasks.length,
+            message: "Flight found!",
+            flights,
+            count: flights.length
         });
     } catch (error) {
         res.status(500).json ({
             success :false,
             message: "Internal Server Error",
-            error: error.message,
+            error: error.message
         });
     }
 };
-// get single Task
+// get a single flight
 
-exports.getTask = async (req, res) =>{
+exports.getFlight = async (req, res) =>{
     try {
         let id = {_id: req.param.id};
-        let task = await Task.findOne({id});
-        if(!task) return res.status(404).json({
+        let flight = await Flight.findOne({id});
+        if(!flight) return res.status(404).json({
             success: false,
-            message: "Task not found",
+            message: "flight not found",
         })
         res.status(200).json({
             success:true,
-            message: 'Task found',
-            task,
+            message: 'flight found',
+            flight,
         })
     } catch (error) {
         res.catch(500).json({
@@ -50,21 +51,21 @@ exports.getTask = async (req, res) =>{
     }
 };
 
-//create tasks
+//book flight
 
-exports.createTask = async (req, res) => {
+exports.bookFlight = async (req, res) => {
     try {
-        let task = await req.body;
-        let created = await Task.create(task);
+        let flight = await req.body;
+        let booked = await Flight.create(flight);
 
-    if (!created) return res.status(400).json({
+    if (!booked) return res.status(400).json({
         success: false,
-        message: 'Task creation failed',
+        message: 'Flight booking not successful ',
     })
     return res.status(200).json({
         success: true,
-        message: 'Task created successfully',
-        user: created
+        message: 'Flight booked successfully',
+        user: booked
     })
     } catch (error) {
         res.status(500).json({
@@ -78,20 +79,20 @@ exports.createTask = async (req, res) => {
 
 //update task
 
-exports.updateTask = async (req, res) => {
+exports.updateFlight = async (req, res) => {
     try {
         let id = {_id: req.params.id}
-        let task = await req.body;
-        let update = await Task.findOneAndUpdate(id, task, {new: true});
+        let flight = await req.body;
+        let update = await Flight.findOneAndUpdate(id, flight, {new: true});
 
     if (!update) return res.status(400).json({
         success: false,
-        message: 'Task not updated',
+        message: 'flight not updated'
     });
     return res.status(200).json({
         success: true,
-        message: 'Task updated successfully',
-        task: update,
+        message: 'Flight updated successfully',
+        flight: update
     });
     } catch (error) {
         res.status(500).json({
@@ -104,24 +105,24 @@ exports.updateTask = async (req, res) => {
     
 };
 
-//delete task
-exports.deleteTask = async (req, res) => {
+//cancel flight
+exports.cancelFlight = async (req, res) => {
     try {
         let id = {_id: req.params.id}
-        let deleted = await Task.findOneAndRemove(id);
-        if(!deleted) return res.status(400).json({
+        let canceled = await Flight.findOneAndRemove(id);
+        if(!canceled) return res.status(400).json({
             success: false,
-            message: 'Task not deleted',
+            message: 'flight not deleted'
         });
         return res.status(200).json({
             success: true,
-            message: "Task deleted successfully",
+            message: "flight canceled successfully"
         });
     } catch (error) {
         res.status(500).json({
             success: false,
             message: "Internal Server Error",
-            error: error.message,
+            error: error.message
         });
     }
 }
